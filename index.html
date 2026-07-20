@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aysmartai Word Unscrambler</title>
+<style>
+  :root{
+    --bg:#0f1115;
+    --panel:#171a21;
+    --panel-2:#1e222b;
+    --border:#2a2f3a;
+    --text:#eef0f4;
+    --text-dim:#9aa1af;
+    --accent:#5b8cff;
+    --accent-2:#7fe0c4;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:32px 16px 64px;
+  }
+  .wrap{width:100%;max-width:640px;}
+  h1{
+    font-size:28px;
+    font-weight:600;
+    margin:0 0 6px;
+    text-align:center;
+    letter-spacing:-0.02em;
+  }
+  .subtitle{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:14px;
+    margin:0 0 28px;
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:20px;
+  }
+  .input-row{
+    display:flex;
+    gap:10px;
+  }
+  input[type=text]{
+    flex:1;
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--text);
+    font-size:20px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:12px 14px;
+    outline:none;
+  }
+  input[type=text]:focus{border-color:var(--accent);}
+  button{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    padding:0 20px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:opacity .15s;
+  }
+  button:hover{opacity:.88;}
+  button:disabled{opacity:.4;cursor:not-allowed;}
+  .options{
+    display:flex;
+    gap:18px;
+    margin-top:14px;
+    flex-wrap:wrap;
+    font-size:13px;
+    color:var(--text-dim);
+  }
+  .options label{display:flex;align-items:center;gap:6px;cursor:pointer;}
+  select{
+    background:var(--panel-2);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:4px 8px;
+    font-size:13px;
+  }
+  .status{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:13px;
+    margin-bottom:6px;
+    min-height:18px;
+  }
+  .results-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:12px;
+  }
+  .results-header h2{
+    font-size:15px;
+    font-weight:600;
+    margin:0;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  .results-count{
+    font-size:13px;
+    color:var(--text-dim);
+  }
+  .group{margin-bottom:14px;}
+  .group-label{
+    font-size:12px;
+    color:var(--accent-2);
+    font-weight:600;
+    margin-bottom:6px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  .chip-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:6px 12px;
+    font-size:15px;
+    letter-spacing:0.02em;
+  }
+  .empty{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:14px;
+    padding:20px 0;
+  }
+  footer{
+    margin-top:24px;
+    text-align:center;
+    color:var(--text-dim);
+    font-size:12px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Word Unscrambler</h1>
+  <p class="subtitle">Enter jumbled letters to find every matching word</p>
+
+  <div class="panel">
+    <div class="input-row">
+      <input type="text" id="letters" placeholder="e.g. TSRIAN" maxlength="20" autocomplete="off" autocapitalize="characters" />
+      <button id="go">Unscramble</button>
+    </div>
+    <div class="options">
+      <label>Min length
+        <select id="minlen">
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="exactonly"/> Use all letters only</label>
+      <label>
+        Include blank
+        <input type="text" id="blank" placeholder="?" maxlength="1" style="width:36px;text-align:center;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:3px;"/>
+      </label>
+    </div>
+  </div>
+
+  <div class="status" id="status">Loading dictionary…</div>
+
+  <div class="panel" id="resultsPanel" style="display:none;">
+    <div class="results-header">
+      <h2>Results</h2>
+      <span class="results-count" id="resultsCount"></span>
+    </div>
+    <div id="results"></div>
+  </div>
+
+  <footer>Local dictionary lookup — nothing you type leaves your browser.</footer>
+</div>
+
+<script src="words.js"></script>
+<script>
+(function(){
+  var statusEl = document.getElementById('status');
+  var lettersInput = document.getElementById('letters');
+  var goBtn = document.getElementById('go');
+  var resultsPanel = document.getElementById('resultsPanel');
+  var resultsEl = document.getElementById('results');
+  var resultsCount = document.getElementById('resultsCount');
+  var minlenSel = document.getElementById('minlen');
+  var exactonlyChk = document.getElementById('exactonly');
+  var blankInput = document.getElementById('blank');
+
+  var byKey = null; // sorted-letters -> [words]  (exact anagrams)
+  var wordsByLen = null; // length -> [words] with sorted-letter counts precomputed
+
+  function sortLetters(s){
+    return s.split('').sort().join('');
+  }
+
+  function letterCounts(s){
+    var c = {};
+    for (var i=0;i<s.length;i++){
+      var ch = s[i];
+      c[ch] = (c[ch]||0)+1;
+    }
+    return c;
+  }
+
+  function buildIndex(){
+    var words = window.WORDS || [];
+    byKey = Object.create(null);
+    wordsByLen = Object.create(null);
+    for (var i=0;i<words.length;i++){
+      var w = words[i];
+      var key = sortLetters(w);
+      if (!byKey[key]) byKey[key] = [];
+      byKey[key].push(w);
+      var len = w.length;
+      if (!wordsByLen[len]) wordsByLen[len] = [];
+      wordsByLen[len].push({w:w, counts:letterCounts(w)});
+    }
+    statusEl.textContent = words.length.toLocaleString() + ' words loaded. Type your letters above.';
+  }
+
+  function canForm(wordCounts, poolCounts){
+    for (var ch in wordCounts){
+      if (ch === '_') continue; // blank wildcard handled separately
+      if ((poolCounts[ch]||0) < wordCounts[ch]) return false;
+    }
+    return true;
+  }
+
+  // Supports one wildcard letter (blank) represented as '?' matching any single letter.
+  function canFormWithBlank(wordCounts, poolCounts, blanks){
+    var deficit = 0;
+    for (var ch in wordCounts){
+      var have = poolCounts[ch] || 0;
+      var need = wordCounts[ch];
+      if (have < need) deficit += (need - have);
+    }
+    return deficit <= blanks;
+  }
+
+  function unscramble(){
+    var raw = lettersInput.value.toLowerCase().replace(/[^a-z]/g,'');
+    var blank = (blankInput.value || '').toLowerCase().replace(/[^a-z]/g,'');
+    var blanks = blank.length; // number of wildcard letters allowed (0 or 1 typically)
+    if (!raw){
+      resultsPanel.style.display='none';
+      statusEl.textContent = 'Enter some letters to get started.';
+      return;
+    }
+    var minLen = parseInt(minlenSel.value,10);
+    var exactOnly = exactonlyChk.checked;
+    var poolCounts = letterCounts(raw);
+    var maxLen = raw.length + blanks;
+
+    var found = {}; // length -> [words]
+    var seen = Object.create(null);
+
+    if (exactOnly){
+      // only words using ALL letters (word length must equal total letters available)
+      for (var L = Math.max(minLen, raw.length); L <= maxLen; L++){
+        var arr = [];
+        var bucket2 = wordsByLen[L];
+        if (bucket2){
+          for (var j=0;j<bucket2.length;j++){
+            var e = bucket2[j];
+            if (canFormWithBlank(e.counts, poolCounts, blanks)){
+              arr.push(e.w);
+              seen[e.w]=true;
+            }
+          }
+        }
+        if (arr.length) found[L]=arr;
+      }
+    } else {
+      for (var len2 = minLen; len2 <= maxLen; len2++){
+        var b = wordsByLen[len2];
+        if (!b) continue;
+        var arr2 = [];
+        for (var k=0;k<b.length;k++){
+          var ent = b[k];
+          if (canFormWithBlank(ent.counts, poolCounts, blanks)){
+            arr2.push(ent.w);
+          }
+        }
+        if (arr2.length) found[len2]=arr2;
+      }
+    }
+
+    renderResults(found, raw);
+  }
+
+  function renderResults(found, raw){
+    var lens = Object.keys(found).map(Number).sort(function(a,b){return b-a;});
+    var total = 0;
+    resultsEl.innerHTML = '';
+    if (lens.length === 0){
+      resultsEl.innerHTML = '<div class="empty">No words found for "' + raw.toUpperCase() + '". Try adjusting the minimum length or removing "use all letters".</div>';
+      resultsPanel.style.display='block';
+      resultsCount.textContent = '';
+      return;
+    }
+    lens.forEach(function(len){
+      var words = found[len].slice().sort();
+      total += words.length;
+      var group = document.createElement('div');
+      group.className = 'group';
+      var label = document.createElement('div');
+      label.className = 'group-label';
+      label.textContent = len + ' letters (' + words.length + ')';
+      var grid = document.createElement('div');
+      grid.className = 'chip-grid';
+      words.forEach(function(w){
+        var chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.textContent = w;
+        grid.appendChild(chip);
+      });
+      group.appendChild(label);
+      group.appendChild(grid);
+      resultsEl.appendChild(group);
+    });
+    resultsCount.textContent = total.toLocaleString() + ' words';
+    resultsPanel.style.display='block';
+  }
+
+  goBtn.addEventListener('click', unscramble);
+  lettersInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') unscramble();
+  });
+
+  // Kick off index build once words.js is loaded
+  if (window.WORDS && window.WORDS.length){
+    buildIndex();
+  } else {
+    statusEl.textContent = 'Could not load dictionary (words.js missing).';
+  }
+})();
+</script>
+</body>
+</html>
