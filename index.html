@@ -1,300 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>aysmartai | Tech & AI Projects</title>
-    <style>
-        :root {
-            --bg-color: #0f111a;
-            --surface-color: #1a1d2d;
-            --text-main: #f8f9fa;
-            --text-muted: #a0aabf;
-            --accent-primary: #4ade80; /* Neon Green */
-            --accent-secondary: #3b82f6; /* Blue */
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        /* Navigation */
-        header {
-            background-color: rgba(15, 17, 26, 0.9);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            margin-left: 2rem;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-primary);
-        }
-
-        /* Hero Section */
-        .hero {
-            max-width: 1200px;
-            margin: 150px auto 100px;
-            padding: 0 2rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--accent-primary);
-            color: var(--bg-color);
-            padding: 0.8rem 2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
-        }
-
-        /* Projects Section */
-        .projects {
-            max-width: 1200px;
-            margin: 0 auto 100px;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background-color: var(--surface-color);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s, border-color 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(74, 222, 128, 0.3);
-        }
-
-        /* Project Image Previews */
-        .card-preview {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 6px;
-            margin-bottom: 1.2rem;
-            background-color: #0f111a;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .tag {
-            font-size: 0.8rem;
-            background-color: rgba(59, 130, 246, 0.1);
-            color: var(--accent-secondary);
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 1rem;
-            align-self: flex-start;
-        }
-
-        .card h3 {
-            margin-bottom: 0.8rem;
-            font-size: 1.3rem;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .card-link {
-            color: var(--accent-primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .card-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; 
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aysmartai Word Unscrambler</title>
+<style>
+  :root{
+    --bg:#0f1115;
+    --panel:#171a21;
+    --panel-2:#1e222b;
+    --border:#2a2f3a;
+    --text:#eef0f4;
+    --text-dim:#9aa1af;
+    --accent:#5b8cff;
+    --accent-2:#7fe0c4;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:32px 16px 64px;
+  }
+  .wrap{width:100%;max-width:640px;}
+  h1{
+    font-size:28px;
+    font-weight:600;
+    margin:0 0 6px;
+    text-align:center;
+    letter-spacing:-0.02em;
+  }
+  .subtitle{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:14px;
+    margin:0 0 28px;
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:20px;
+  }
+  .input-row{
+    display:flex;
+    gap:10px;
+  }
+  input[type=text]{
+    flex:1;
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--text);
+    font-size:20px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:12px 14px;
+    outline:none;
+  }
+  input[type=text]:focus{border-color:var(--accent);}
+  button{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    padding:0 20px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:opacity .15s;
+  }
+  button:hover{opacity:.88;}
+  button:disabled{opacity:.4;cursor:not-allowed;}
+  .options{
+    display:flex;
+    gap:18px;
+    margin-top:14px;
+    flex-wrap:wrap;
+    font-size:13px;
+    color:var(--text-dim);
+  }
+  .options label{display:flex;align-items:center;gap:6px;cursor:pointer;}
+  select{
+    background:var(--panel-2);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:4px 8px;
+    font-size:13px;
+  }
+  .status{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:13px;
+    margin-bottom:6px;
+    min-height:18px;
+  }
+  .results-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:12px;
+  }
+  .results-header h2{
+    font-size:15px;
+    font-weight:600;
+    margin:0;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  .results-count{
+    font-size:13px;
+    color:var(--text-dim);
+  }
+  .group{margin-bottom:14px;}
+  .group-label{
+    font-size:12px;
+    color:var(--accent-2);
+    font-weight:600;
+    margin-bottom:6px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  .chip-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:6px 12px;
+    font-size:15px;
+    letter-spacing:0.02em;
+  }
+  .empty{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:14px;
+    padding:20px 0;
+  }
+  footer{
+    margin-top:24px;
+    text-align:center;
+    color:var(--text-dim);
+    font-size:12px;
+  }
+</style>
 </head>
 <body>
+<div class="wrap">
+  <h1>Smart word Unscrambler</h1>
+  <p class="subtitle">Enter jumbled letters to find every matching word</p>
 
-    <header>
-        <nav>
-            <a href="#" class="logo">aysmartai</a>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#projects">Projects</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </nav>
-    </header>
+  <div class="panel">
+    <div class="input-row">
+      <input type="text" id="letters" placeholder="e.g. TSRIAN" maxlength="20" autocomplete="off" autocapitalize="characters" />
+      <button id="go">Unscramble</button>
+    </div>
+    <div class="options">
+      <label>Min length
+        <select id="minlen">
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="exactonly"/> Use all letters only</label>
+      <label>
+        Include blank
+        <input type="text" id="blank" placeholder="?" maxlength="1" style="width:36px;text-align:center;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:3px;"/>
+      </label>
+    </div>
+  </div>
 
-    <main>
-        <section id="home" class="hero">
-            <h1>Intelligence, Unbound.</h1>
-            <p>An AI-agnostic showcase. Exploring diverse models, robust infrastructure, and practical tech implementations without vendor lock-in.</p>
-            <a href="#projects" class="btn">Explore Projects</a>
-        </section>
+  <div class="status" id="status">Loading dictionary…</div>
 
-        <section id="projects" class="projects">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="grid">
-                
-                <!-- Project 1: SuperPool (Your Link) -->
-                <div class="card">
-                    <!-- Tip: Replace this src link with a screenshot of your actual web app -->
-                    <img class="card-preview" src="superpool-preview.png" alt="SuperPool Preview">
-                    <span class="tag">Web App</span>
-                    <h3>Lotto SuperPool</h3>
-                    <p>A smart, collaborative lottery number pooling platform. Features an intuitive interface for managing shared numbers and expanding group probability.</p>
-                    <a href="https://superpool.aysmartai.com/" target="_blank" rel="noopener noreferrer" class="card-link">Live Preview ↗</a>
-                </div>
+  <div class="panel" id="resultsPanel" style="display:none;">
+    <div class="results-header">
+      <h2>Results</h2>
+      <span class="results-count" id="resultsCount"></span>
+    </div>
+    <div id="results"></div>
+  </div>
 
-                <div class="card">
-                    <img class="card-preview" src="smart-unscrambler.png" alt="unscrambler Preview">
-                    <span class="tag">Web App</span>
-                    <h3>Smart Word Unscrambler</h3>
-                    <p>A fast, offline word unscrambler. Type any jumbled letters and instantly see every real word hiding inside them, sorted by length.</p>
-                    <a href="https://unscrambler.aysmartai.com/" target="_blank" rel="noopener noreferrer" class="card-link">Live Preview ↗</a>
-                </div>
+  <footer>Local dictionary lookup — nothing you type leaves your browser.</footer>
+</div>
 
-                <!-- Project 2 -->
-                <div class="card">
-                    <img class="card-preview" src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=600&q=80" alt="Code Preview">
-                    <span class="tag">Local LLMs</span>
-                    <h3>Edge AI Deployment .. coming soon</h3>
-                    <p>Orchestrating small language models (SLMs) on consumer hardware and mobile devices using 4-bit quantization and tools like Llama.cpp.</p>
-                    <a href="#" class="card-link">View Architecture →</a>
-                </div>
+<script src="words.js"></script>
+<script>
+(function(){
+  var statusEl = document.getElementById('status');
+  var lettersInput = document.getElementById('letters');
+  var goBtn = document.getElementById('go');
+  var resultsPanel = document.getElementById('resultsPanel');
+  var resultsEl = document.getElementById('results');
+  var resultsCount = document.getElementById('resultsCount');
+  var minlenSel = document.getElementById('minlen');
+  var exactonlyChk = document.getElementById('exactonly');
+  var blankInput = document.getElementById('blank');
 
-                <!-- Project 3 -->
-                <div class="card">
-                    <img class="card-preview" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="Server Preview">
-                    <span class="tag">Infrastructure</span>
-                    <h3>AI Pipeline Automation .. coming soon</h3>
-                    <p>A Kubernetes and Terraform-based infrastructure setup designed to train and serve open-weight models securely and efficiently.</p>
-                    <a href="#" class="card-link">View Repository →</a>
-                </div>
+  var byKey = null; // sorted-letters -> [words]  (exact anagrams)
+  var wordsByLen = null; // length -> [words] with sorted-letter counts precomputed
 
-                <!-- Project 4 -->
-                <div class="card">
-                    <img class="card-preview" src="https://images.unsplash.com/photo-1561557944-6ab3d8b3d683?auto=format&fit=crop&w=600&q=80" alt="Vision Preview">
-                    <span class="tag">Computer Vision</span>
-                    <h3>Multi-Model Vision Hub .. coming soon </h3>
-                    <p>An API gateway that routes image processing requests between multiple open-source vision models to compare latency and accuracy.</p>
-                    <a href="#" class="card-link">See Live Demo →</a>
-                </div>
+  function sortLetters(s){
+    return s.split('').sort().join('');
+  }
 
-            </div>
-        </section>
-    </main>
+  function letterCounts(s){
+    var c = {};
+    for (var i=0;i<s.length;i++){
+      var ch = s[i];
+      c[ch] = (c[ch]||0)+1;
+    }
+    return c;
+  }
 
-    <footer id="contact">
-        <p>© 2026 aysmartai. All rights reserved. &middot; contact@aysmartai.com &middot;
-        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Building scalable, platform-agnostic solutions.</p>
-    </footer>
+  function buildIndex(){
+    var words = window.WORDS || [];
+    byKey = Object.create(null);
+    wordsByLen = Object.create(null);
+    for (var i=0;i<words.length;i++){
+      var w = words[i];
+      var key = sortLetters(w);
+      if (!byKey[key]) byKey[key] = [];
+      byKey[key].push(w);
+      var len = w.length;
+      if (!wordsByLen[len]) wordsByLen[len] = [];
+      wordsByLen[len].push({w:w, counts:letterCounts(w)});
+    }
+    statusEl.textContent = words.length.toLocaleString() + ' words loaded. Type your letters above.';
+  }
 
-    <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+  function canForm(wordCounts, poolCounts){
+    for (var ch in wordCounts){
+      if (ch === '_') continue; // blank wildcard handled separately
+      if ((poolCounts[ch]||0) < wordCounts[ch]) return false;
+    }
+    return true;
+  }
+
+  // Supports one wildcard letter (blank) represented as '?' matching any single letter.
+  function canFormWithBlank(wordCounts, poolCounts, blanks){
+    var deficit = 0;
+    for (var ch in wordCounts){
+      var have = poolCounts[ch] || 0;
+      var need = wordCounts[ch];
+      if (have < need) deficit += (need - have);
+    }
+    return deficit <= blanks;
+  }
+
+  function unscramble(){
+    var raw = lettersInput.value.toLowerCase().replace(/[^a-z]/g,'');
+    var blank = (blankInput.value || '').toLowerCase().replace(/[^a-z]/g,'');
+    var blanks = blank.length; // number of wildcard letters allowed (0 or 1 typically)
+    if (!raw){
+      resultsPanel.style.display='none';
+      statusEl.textContent = 'Enter some letters to get started.';
+      return;
+    }
+    var minLen = parseInt(minlenSel.value,10);
+    var exactOnly = exactonlyChk.checked;
+    var poolCounts = letterCounts(raw);
+    var maxLen = raw.length + blanks;
+
+    var found = {}; // length -> [words]
+    var seen = Object.create(null);
+
+    if (exactOnly){
+      // only words using ALL letters (word length must equal total letters available)
+      for (var L = Math.max(minLen, raw.length); L <= maxLen; L++){
+        var arr = [];
+        var bucket2 = wordsByLen[L];
+        if (bucket2){
+          for (var j=0;j<bucket2.length;j++){
+            var e = bucket2[j];
+            if (canFormWithBlank(e.counts, poolCounts, blanks)){
+              arr.push(e.w);
+              seen[e.w]=true;
+            }
+          }
+        }
+        if (arr.length) found[L]=arr;
+      }
+    } else {
+      for (var len2 = minLen; len2 <= maxLen; len2++){
+        var b = wordsByLen[len2];
+        if (!b) continue;
+        var arr2 = [];
+        for (var k=0;k<b.length;k++){
+          var ent = b[k];
+          if (canFormWithBlank(ent.counts, poolCounts, blanks)){
+            arr2.push(ent.w);
+          }
+        }
+        if (arr2.length) found[len2]=arr2;
+      }
+    }
+
+    renderResults(found, raw);
+  }
+
+  function renderResults(found, raw){
+    var lens = Object.keys(found).map(Number).sort(function(a,b){return b-a;});
+    var total = 0;
+    resultsEl.innerHTML = '';
+    if (lens.length === 0){
+      resultsEl.innerHTML = '<div class="empty">No words found for "' + raw.toUpperCase() + '". Try adjusting the minimum length or removing "use all letters".</div>';
+      resultsPanel.style.display='block';
+      resultsCount.textContent = '';
+      return;
+    }
+    lens.forEach(function(len){
+      var words = found[len].slice().sort();
+      total += words.length;
+      var group = document.createElement('div');
+      group.className = 'group';
+      var label = document.createElement('div');
+      label.className = 'group-label';
+      label.textContent = len + ' letters (' + words.length + ')';
+      var grid = document.createElement('div');
+      grid.className = 'chip-grid';
+      words.forEach(function(w){
+        var chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.textContent = w;
+        grid.appendChild(chip);
+      });
+      group.appendChild(label);
+      group.appendChild(grid);
+      resultsEl.appendChild(group);
+    });
+    resultsCount.textContent = total.toLocaleString() + ' words';
+    resultsPanel.style.display='block';
+  }
+
+  goBtn.addEventListener('click', unscramble);
+  lettersInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') unscramble();
+  });
+
+  // Kick off index build once words.js is loaded
+  if (window.WORDS && window.WORDS.length){
+    buildIndex();
+  } else {
+    statusEl.textContent = 'Could not load dictionary (words.js missing).';
+  }
+})();
+</script>
 </body>
 </html>
