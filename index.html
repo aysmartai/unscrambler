@@ -3,7 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aysmartai Word Unscrambler</title>
+<title>Word Unscrambler - Unscramble Words Instantly | Aysmartai</title>
+<meta name="description" content="Free online word unscrambler. Enter any jumbled letters and instantly find every valid word hiding inside them - perfect for Scrabble, Words With Friends, Wordle, and crossword puzzles. Fast, private, and works offline in your browser.">
+<meta name="keywords" content="word unscrambler, unscramble words, anagram solver, scrabble word finder, words with friends helper, letter unscrambler, word finder, anagram generator">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Aysmartai">
+<link rel="canonical" href="https://unscrambler.aysmartai.com/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://unscrambler.aysmartai.com/">
+<meta property="og:title" content="Word Unscrambler - Unscramble Words Instantly">
+<meta property="og:description" content="Enter jumbled letters and instantly find every valid word hiding inside them. Free, fast, and private - runs entirely in your browser.">
+<meta property="og:site_name" content="Aysmartai">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Word Unscrambler - Unscramble Words Instantly">
+<meta name="twitter:description" content="Enter jumbled letters and instantly find every valid word hiding inside them. Free, fast, and private.">
+
+<!-- Structured data: WebApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Word Unscrambler",
+  "url": "https://unscrambler.aysmartai.com/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "description": "Free online word unscrambler that finds every valid word hidden in a set of jumbled letters. Useful for Scrabble, Words With Friends, Wordle, and crossword puzzles.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Aysmartai",
+    "email": "contact@aysmartai.com"
+  }
+}
+</script>
+
+<!-- Structured data: FAQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does the word unscrambler work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Type in any set of jumbled letters and the tool checks every possible combination against a dictionary of over 350,000 English words, instantly showing every valid word that can be formed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this word unscrambler free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, the word unscrambler is completely free and runs entirely in your browser with no sign-up required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this for Scrabble or Words With Friends?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, this tool is commonly used to find valid words for Scrabble, Words With Friends, Wordle, and other word and crossword puzzle games."
+      }
+    }
+  ]
+}
+</script>
 <style>
   :root{
     --bg:#0f1115;
@@ -148,6 +223,15 @@
     font-size:14px;
     padding:20px 0;
   }
+  .visually-hidden{
+    position:absolute;
+    width:1px;height:1px;
+    padding:0;margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
   footer{
     margin-top:24px;
     text-align:center;
@@ -157,12 +241,15 @@
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Smart word Unscrambler</h1>
-  <p class="subtitle">Enter jumbled letters to find every matching word</p>
+<main class="wrap">
+  <header>
+    <h1>Word Unscrambler</h1>
+    <p class="subtitle">Enter jumbled letters to find every matching word</p>
+  </header>
 
-  <div class="panel">
+  <section class="panel" aria-label="Word unscrambler tool">
     <div class="input-row">
+      <label for="letters" class="visually-hidden">Enter letters to unscramble</label>
       <input type="text" id="letters" placeholder="e.g. TSRIAN" maxlength="20" autocomplete="off" autocapitalize="characters" />
       <button id="go">Unscramble</button>
     </div>
@@ -181,23 +268,52 @@
         <input type="text" id="blank" placeholder="?" maxlength="1" style="width:36px;text-align:center;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:3px;"/>
       </label>
     </div>
-  </div>
+  </section>
 
   <div class="status" id="status">Loading dictionary…</div>
 
-  <div class="panel" id="resultsPanel" style="display:none;">
+  <section class="panel" id="resultsPanel" style="display:none;" aria-label="Unscrambled word results">
     <div class="results-header">
       <h2>Results</h2>
       <span class="results-count" id="resultsCount"></span>
     </div>
     <div id="results"></div>
-  </div>
+  </section>
+
+  <noscript>
+    <p>This word unscrambler requires JavaScript to be enabled in your browser to function.</p>
+  </noscript>
+
+  <section class="panel" aria-label="About this tool">
+    <h2 style="font-size:16px;margin-top:0;">About the Word Unscrambler</h2>
+    <p style="color:var(--text-dim);font-size:14px;line-height:1.6;">
+      This free word unscrambler helps you find every valid English word hidden inside a set of jumbled letters.
+      Simply type your letters, choose a minimum word length, and get instant results sorted by length -
+      handy for Scrabble, Words With Friends, Wordle, crosswords, and other word games. The tool checks your
+      letters against a dictionary of over 350,000 English words entirely inside your browser, so nothing you
+      type is ever sent to a server.
+    </p>
+  </section>
+
+  <section class="panel" aria-label="Frequently asked questions">
+    <h2 style="font-size:16px;margin-top:0;">Frequently Asked Questions</h2>
+    <div style="color:var(--text-dim);font-size:14px;line-height:1.6;">
+      <p><strong style="color:var(--text);">How does the word unscrambler work?</strong><br/>
+      Type in any set of jumbled letters and the tool checks every possible combination against a dictionary
+      of over 350,000 English words, instantly showing every valid word that can be formed.</p>
+      <p><strong style="color:var(--text);">Is this word unscrambler free to use?</strong><br/>
+      Yes, it's completely free with no sign-up required.</p>
+      <p><strong style="color:var(--text);">Can I use this for Scrabble or Words With Friends?</strong><br/>
+      Yes, this tool is commonly used to find valid words for Scrabble, Words With Friends, Wordle, and other
+      word and crossword puzzle games.</p>
+    </div>
+  </section>
 
   <footer>
     Local dictionary lookup — nothing you type leaves your browser.<br/>
     © 2026 aysmartai. All rights reserved. · <a href="mailto:contact@aysmartai.com" style="color:var(--text-dim);">contact@aysmartai.com</a>
   </footer>
-</div>
+</main>
 
 <script src="words.js"></script>
 <script>
@@ -310,7 +426,6 @@
         if (arr2.length) found[len2]=arr2;
       }
     }
-
     renderResults(found, raw);
   }
 
